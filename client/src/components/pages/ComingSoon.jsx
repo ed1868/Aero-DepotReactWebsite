@@ -9,21 +9,27 @@ export default function Home() {
     <div className="CommingSoon commingSoonContainer">
       <div className="jumbotron jumboHeight">
         <div className="container">
-          {/* <h1 className='headerText'>Coming Soon!</h1> */}
-          <h1 className='headerText' id="word">
-            <span class="letter">C</span>
-            <span class="letter">O</span>
-            <span class="letter">M</span>
-            <span class="letter">I</span>
-            <span class="letter">N</span>
-            <span class="letter">G</span>
-            <span class="letter"> </span>
-            <span class="letter">S</span>
-            <span class="letter">O</span>
-            <span class="letter">O</span>
-            <span class="letter">N</span>
+          <div className="container row">
+            <div className='col-md-12 col-sm-12'>
+              <h1 className='headerText' id="word">
+                <span class="letter">C</span>
+                <span class="letter">O</span>
+                <span class="letter">M</span>
+                <span class="letter">I</span>
+                <span class="letter">N</span>
+                <span class="letter">G</span>
+                <span class="letter"> </span>
+                <span class="letter">S</span>
+                <span class="letter">O</span>
+                <span class="letter">O</span>
+                <span class="letter">N</span>
+                <span class="letter">!</span>
 
-          </h1>
+              </h1>
+            </div>
+          </div>
+          {/* <h1 className='headerText'>Coming Soon!</h1> */}
+
           <div className="aeroLogoContainer">
             <img src={logo} className='coverLogoBackgrounds'>
             </img>
