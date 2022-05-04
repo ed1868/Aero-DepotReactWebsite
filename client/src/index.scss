@@ -97,3 +97,43 @@ body {
     color: $primary;
   }
 }
+
+// --------------------
+// Style for Coming Soon component
+.commingSoonContainer {
+  height: 100%;
+  background-image: url("./assets/images/newBackground.jpeg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+}
+
+.jumboHeight {
+  height: 100vh;
+}
+
+.coverLogoBackgrounds {
+  width: 55%;
+
+}
+
+.headerText {
+  padding-top: 150px;
+  font-family: 'Nunito Sans', sans-serif;
+  color: white;
+  font-size: 100px;
+
+}
+
+.aeroLogoContainer {
+  padding-top: 10%;
+}
+
+.aeroLink {
+  font-size: 25px;
+  font-family: 'Nunito Sans', sans-serif;
+  Color: black;
+  font-weight: bold;
+
+}

@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <meta name="theme-color" content="#000000" />
-    <!--
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="theme-color" content="#000000" />
+  <!--
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
-    <!-- <link rel="manifest" href="%PUBLIC_URL%/manifest.json"> -->
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
-    <!--
+  <!-- <link rel="manifest" href="%PUBLIC_URL%/manifest.json"> -->
+  <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital@1&display=swap" rel="stylesheet">
+  <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
       Only files inside the `public` folder can be referenced from the HTML.
@@ -22,15 +25,13 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>MERN Boilerplate</title>
-  </head>
+  <title>AERO-DEPOT MIAMI</title>
+</head>
 
-  <body>
-    <noscript>
-      You need to enable JavaScript to run this app.
-    </noscript>
-    <div id="root"></div>
-    <!--
+<body>
+
+  <div id="root"></div>
+  <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
 
@@ -40,5 +41,183 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-  </body>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script>
+  Letters = function () {
+    this.lettersDOM = null;
+    this.active = null;
+    this.letters = [];
+    this.alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "i", "u", "v", "w", "x", "y", "z", "~", "&", "|", "^", "ç", "@", "]", "[", "{", "}", "ù", "*", "µ", "¤", "$", "£", "€", "°", ")", "(", "+", "-", "/", "<", ">", "²", "`", "é", "è", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"
+    ];
+
+    return this;
+  };
+
+  Letters.prototype.init = function (word) {
+
+    this.lettersDOM = document.querySelectorAll('.letter');
+    this.active = true;
+    var i;
+    var nextChar;
+    var lettersMax = this.lettersDOM.length;
+    console.log('dsfdsfsd', this.letters);
+    for (i = 0; i < this.lettersDOM.length; i++) {
+
+      if (word.charAt(i) != "")
+        nextChar = word.charAt(i);
+      else
+        nextChar = false;
+
+      this.letters.push(new Letter(this.lettersDOM[i], nextChar));
+
+    }
+
+    if (word.length > lettersMax) {
+
+      var wordContainer = document.getElementById("word");
+
+      for (i = lettersMax; i < word.length; i++) {
+        var letterSpan = document.createElement('span');
+        letterSpan.innerHTML = "";
+        letterSpan.classList.add('letter');
+        wordContainer.appendChild(letterSpan);
+        this.letters.push(new Letter(letterSpan, word.charAt(i)));
+      }
+    }
+
+    this.animate();
+
+    return this;
+
+  };
+
+  Letters.prototype.animate = function () {
+    var i;
+    var random;
+    var char;
+
+    if (this.active) {
+
+      window.requestAnimationFrame(this.animate.bind(this));
+
+      var indexes = [];
+
+      for (i = 0; i < this.letters.length; i++) {
+
+        var current = this.letters[i];
+
+        if (!current.isDead) {
+          random = Math.floor(Math.random() * (this.alphabet.length - 0));
+          char = this.alphabet[random];
+          current.render(char);
+        } else {
+          indexes.push(i);
+        }
+      }
+
+      for (i = 0; i < indexes.length; i++) {
+        this.letters.splice(indexes[i], 1);
+      }
+
+      if (this.letters.length == 0) {
+        this.stop();
+      }
+    }
+  };
+
+  Letters.prototype.start = function (word) {
+    this.init(word);
+  };
+
+  Letters.prototype.stop = function () {
+    this.active = false;
+  };
+
+  Letter = function (DOMElement, nextChar) {
+
+    var scope = this;
+
+    this.DOMEl = DOMElement;
+    this.char = DOMElement.innerHTML;
+    this.next = nextChar;
+    this.speed = Math.floor(Math.random() * (300 - 50));
+    this.total = 0;
+    this.duration = 1000;
+    this.animating = true;
+    this.isDead = false;
+
+    this.timer = setInterval(function () {
+      if (scope.animating === true) {
+        scope.total += scope.speed;
+      }
+      scope.animating = !scope.animating;
+    }, this.speed);
+
+    this.animate();
+
+    return this;
+
+  };
+
+  Letter.prototype.animate = function () {
+    var i;
+    var random;
+
+    if (!this.isDead) {
+      window.requestAnimationFrame(this.animate.bind(this));
+    }
+
+
+    if (this.total < this.duration) {
+
+      if (this.animating) {
+        this.DOMEl.innerHTML = this.char;
+      }
+
+    } else {
+      this.isDead = true;
+
+      if (!this.next) {
+        var parent = document.getElementById('word');
+        parent.removeChild(this.DOMEl);
+        return;
+      }
+
+      this.DOMEl.innerHTML = this.next;
+    }
+  };
+
+  Letter.prototype.render = function (char) {
+
+    if (!this.animating) {
+      this.char = char;
+    }
+
+  };
+
+  var word = ["COMING SOON", "COMING SOON", "COMING SOON"];
+  var nextWord = 1;
+
+  var letters = new Letters();
+
+  setTimeout(function () {
+
+    letters.start(word[nextWord]);
+
+    // setInterval(function () {
+    //   nextWord++;
+    //   if (nextWord >= word.length)
+    //     nextWord = 0;
+
+    //   letters.start(word[nextWord]);
+    // }, 500);
+
+  }, 1000);
+
+
+
+</script>
+
 </html>

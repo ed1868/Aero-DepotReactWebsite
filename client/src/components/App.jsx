@@ -7,18 +7,21 @@ import AddCountry from './pages/AddCountry'
 import Secret from './pages/Secret'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+import ComingSoon from './pages/ComingSoon'
 
 export default function App() {
   return (
     <div className="App">
       <MainNavbar />
       <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/countries" component={Countries} />
+        {/* HOME PAGE FOR NOW BUT IT IS THE COMING SOON PAGE */}
+        <Route path="/" exact component={ComingSoon} />
+        {/* <Route path="/" exact component={Home} /> */}
+        {/* <Route path="/countries" component={Countries} />
         <Route path="/add-country" component={AddCountry} />
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
-        <Route path="/secret" component={Secret} />
+        <Route path="/secret" component={Secret} /> */}
         <Route render={() => <h2>404</h2>} />
       </Switch>
     </div>
