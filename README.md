@@ -1,4 +1,4 @@
-# MERN STACK AERO DEPOT |  Fullstack Application
+# MERN STACK AERO DEPOT |  AI Nomads Fullstack Application
 
 
 ## Useful commands
