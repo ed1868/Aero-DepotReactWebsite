@@ -9,35 +9,70 @@ require('dotenv').config({ path: path.join(__dirname, '../.env') })
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const User = require('../models/User')
+const Roles = require('../models/Roles');
 
-const bcryptSalt = 10
+const bcryptSalt = 12;
 
-require('../configs/database')
+require('../configs/database');
 
-let users = [
+let seedUsers = [
   {
-    username: 'alice',
-    password: bcrypt.hashSync('alice', bcrypt.genSaltSync(bcryptSalt)),
+    username: 'superAdmin',
+    password: bcrypt.hashSync('root', bcrypt.genSaltSync(bcryptSalt)),
+    roleId: 1
+  },
+
+  {
+    username: 'admin',
+    password: bcrypt.hashSync('root', bcrypt.genSaltSync(bcryptSalt)),
+    roleId: 2
   },
   {
-    username: 'bob',
-    password: bcrypt.hashSync('bob', bcrypt.genSaltSync(bcryptSalt)),
-  },
+    username: 'client',
+    password: bcrypt.hashSync('foo', bcrypt.genSaltSync(bcryptSalt)),
+    roleId: 3
+  }
 ]
 
-User.deleteMany()
-  .then(() => {
-    return User.create(users)
-  })
-  .then(usersCreated => {
-    console.log(`${usersCreated.length} users created with the following id:`)
-    console.log(usersCreated.map(u => u._id))
-  })
-  .then(() => {
-    // Close properly the connection to Mongoose
-    mongoose.disconnect()
-  })
-  .catch(err => {
-    mongoose.disconnect()
-    throw err
-  })
+let roleTables = [
+  {
+    roleId: 1,
+    permissions: "superAdmin"
+  },
+  {
+    roleId: 2,
+    permission: "admin"
+  },
+  {
+    roleId: 3,
+    permission: "userOne"
+  }
+]
+
+// let users = [
+//   {
+//     username: 'alice',
+//     password: bcrypt.hashSync('alice', bcrypt.genSaltSync(bcryptSalt)),
+//   },
+//   {
+//     username: 'bob',
+//     password: bcrypt.hashSync('bob', bcrypt.genSaltSync(bcryptSalt)),
+//   },
+// ]
+
+// User.deleteMany()
+//   .then(() => {
+//     return User.create(users)
+//   })
+//   .then(usersCreated => {
+//     console.log(`${usersCreated.length} users created with the following id:`)
+//     console.log(usersCreated.map(u => u._id))
+//   })
+//   .then(() => {
+//     // Close properly the connection to Mongoose
+//     mongoose.disconnect()
+//   })
+//   .catch(err => {
+//     mongoose.disconnect()
+//     throw err
+//   })
