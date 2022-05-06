@@ -18,3 +18,5 @@ yarn-error.log*
 # Temp
 client-old
 server-old
+# Local Netlify folder
+.netlify
