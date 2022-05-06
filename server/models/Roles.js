@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 const rolesSchema = new Schema(
   {
     roleId: {
-      type: Interger,
+      type: Number,
       emum: [1, 2, 3, 4]
     }
   },

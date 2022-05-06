@@ -9,7 +9,7 @@ require('dotenv').config({ path: path.join(__dirname, '../.env') })
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const User = require('../models/User')
-const Roles = require('../models/Roles');
+const Role = require('../models/Roles');
 
 const bcryptSalt = 12;
 
@@ -49,30 +49,42 @@ let roleTables = [
   }
 ]
 
-// let users = [
-//   {
-//     username: 'alice',
-//     password: bcrypt.hashSync('alice', bcrypt.genSaltSync(bcryptSalt)),
-//   },
-//   {
-//     username: 'bob',
-//     password: bcrypt.hashSync('bob', bcrypt.genSaltSync(bcryptSalt)),
-//   },
-// ]
+Role.deleteMany()
+  .then(payload => {
+    console.log(`SUCCESSFUL PAYLOAD : ${payload}`);
+    return Role.create(roleTables);
+  })
+  .then(rolesCreated => {
+    console.log(`${rolesCreated.length} users have been created with the following Id's `);
+    rolesCreated.map(role => {
+      console.log(`ROLE IDS : ${role._id}`);
+    })
+  })
+  .catch(err => {
+    if (err) {
+      console.log(`YOU HAVE ENCOUNTERED AN ERROR IN THE CREATION OF SEEDS :: ${err}`);
+      mongoose.disconnect()
+      throw err
+    }
+  })
 
-// User.deleteMany()
-//   .then(() => {
-//     return User.create(users)
-//   })
-//   .then(usersCreated => {
-//     console.log(`${usersCreated.length} users created with the following id:`)
-//     console.log(usersCreated.map(u => u._id))
-//   })
-//   .then(() => {
-//     // Close properly the connection to Mongoose
-//     mongoose.disconnect()
-//   })
-//   .catch(err => {
-//     mongoose.disconnect()
-//     throw err
-//   })
+User.deleteMany()
+  .then(payload => {
+    console.log(`SUCCESSFUL PAYLOAD : ${payload}`);
+    return User.create(seedUsers)
+  })
+  .then(usersCreated => {
+    console.log(`${usersCreated.length} users have been created with the following Id's `);
+    usersCreated.map(user => {
+      console.log(`USER ID : ${user._id}`);
+    })
+  })
+  .catch(err => {
+    if (err) {
+      console.log(`YOU HAVE ENCOUNTERED AN ERROR IN THE CREATION OF SEEDS :: ${err}`);
+      mongoose.disconnect()
+      throw err
+    }
+  })
+
+

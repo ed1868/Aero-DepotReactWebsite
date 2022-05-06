@@ -3,8 +3,18 @@ const Schema = mongoose.Schema
 
 const userSchema = new Schema(
   {
-    username: String,
-    password: String,
+    username: {
+      type: String,
+      required: true
+    },
+    password: {
+      type: String,
+      required: true
+    },
+    roleId: {
+      type: Number,
+      required: true
+    }
   },
   {
     timestamps: {
